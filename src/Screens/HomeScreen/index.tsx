@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  StyleSheet,
+  ActivityIndicator,
+  Alert,
   FlatList,
   ListRenderItem,
-  View,
-  ActivityIndicator,
+  StyleSheet,
   Text,
-  Alert,
+  View,
 } from 'react-native';
 import _ from 'lodash';
-import {Theme} from 'src/Theme';
-import {useAppSelector} from 'src/hooks';
 import {SearchBar} from 'src/Components/SearchBar';
 import {UserItem} from 'src/Components/UserItem';
+import {useAppSelector} from 'src/hooks';
 import {User} from 'src/Model/User';
 import {useListUsersQuery} from 'src/Services/UsersApi';
 import {
@@ -20,6 +19,7 @@ import {
   getTotalUsersListingPage,
   getUsersListing,
 } from 'src/Store/UserSlice';
+import {Theme} from 'src/Theme';
 
 const NO_OF_ITEMS_PER_PAGE = 6;
 
@@ -55,7 +55,7 @@ export const HomeScreen: React.FC = () => {
       return;
     }
 
-    let newUsers: User[] = [];
+    const newUsers: User[] = [];
     data.forEach(item => {
       const {first_name, last_name, email} = item;
       const name = `${first_name} ${last_name}`;
@@ -101,14 +101,12 @@ export const HomeScreen: React.FC = () => {
       renderItem={renderItem}
       data={data}
       keyExtractor={item => item.id.toString()}
-      // style={{flexGrow: 1}}
       contentContainerStyle={styles.mainContainer}
       ListHeaderComponent={
         <SearchBar
           value={searchText}
           placeHolder={'Search...'}
           onChangeText={val => {
-            console.log(val);
             setSearchText(val);
           }}
           onClearText={onClearText}

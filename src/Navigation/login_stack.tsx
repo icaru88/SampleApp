@@ -4,9 +4,14 @@ import {LoginScreen} from 'src/Screens/LoginScreen';
 import {RegistrationScreen} from 'src/Screens/RegistrationScreen';
 import {LOGIN_ROUTE, REGISTER_ROUTE} from './routes';
 
-const LoginStack = createNativeStackNavigator();
+export type LoginStackParamList = {
+  [LOGIN_ROUTE]: {};
+  [REGISTER_ROUTE]: {};
+};
 
-export const LoginNavigation = ({navigation}) => {
+const LoginStack = createNativeStackNavigator<LoginStackParamList>();
+
+export const LoginNavigation = () => {
   return (
     <LoginStack.Navigator
       initialRouteName={LOGIN_ROUTE}

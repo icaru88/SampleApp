@@ -6,7 +6,7 @@ import {Theme} from 'src/Theme';
 
 type Props = {
   email: string;
-  onChangeText: (text) => void;
+  onChangeText: (text: string) => void;
   isEmailValid?: boolean;
 };
 

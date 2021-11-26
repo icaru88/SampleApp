@@ -7,7 +7,11 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "eslint": "node_modules/eslint/bin/eslint.js -c .eslintrc.js --ext .ts,tsx src --max-warnings=0",
+    "fix": "node_modules/eslint/bin/eslint.js --fix -c .eslintrc.js --ext .ts,tsx src",
+    "prettify": "prettier . --write --ignore-unknown",
+    "tsc": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@react-navigation/native": "^6.0.6",
@@ -33,10 +37,14 @@
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.14.177",
     "@types/react-native": "^0.66.4",
+    "@types/react-native-vector-icons": "^6.4.10",
     "@types/react-test-renderer": "^17.0.1",
     "babel-jest": "^26.6.3",
     "eslint": "^7.14.0",
+    "eslint-plugin-jsdoc": "^37.0.3",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.2",
     "react-test-renderer": "17.0.2",

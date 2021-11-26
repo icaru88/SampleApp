@@ -5,7 +5,7 @@ import {Theme} from 'src/Theme';
 
 type Props = {
   password: string;
-  onChangeText: (text) => void;
+  onChangeText: (text: string) => void;
   showPassword: boolean;
   onPress: () => void;
   title: string;

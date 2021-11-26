@@ -24,7 +24,8 @@ export const RectangularButton: React.FC<Props> = props => {
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled || isLoading}
-      style={[styles.buttonStyle, style]}>
+      style={[styles.buttonStyle, style]}
+    >
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
@@ -33,7 +34,8 @@ export const RectangularButton: React.FC<Props> = props => {
             ? [Theme.colors.skyblue, Theme.colors.pink]
             : [Theme.colors.gray, Theme.colors.lightGray]
         }
-        style={styles.buttonContainer}>
+        style={styles.buttonContainer}
+      >
         {isLoading ? (
           <ActivityIndicator color={'white'} />
         ) : (

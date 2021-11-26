@@ -11,7 +11,7 @@ const initialState: AuthState = {
 };
 
 export const AuthSlice = createSlice({
-  //auto generate action creators that correspond to each case reducer function
+  // auto generate action creators that correspond to each case reducer function
   name: 'Auth',
   initialState,
   reducers: {

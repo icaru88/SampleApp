@@ -4,7 +4,6 @@ const TOKEN_KEY = 'TOKEN';
 const EMAIL_KEY = 'EMAIL';
 
 const storeUserToken = async (token: string) => {
-  console.log('storing user token - ', token);
   try {
     await EncryptedStorage.setItem(TOKEN_KEY, token);
   } catch (error) {
@@ -13,20 +12,15 @@ const storeUserToken = async (token: string) => {
 };
 
 const retrieveUserToken = async () => {
-  console.log('retrieving user token');
-
   try {
-    const token = await EncryptedStorage.getItem(TOKEN_KEY);
-    console.log(token);
-    return token as string;
+    return (await EncryptedStorage.getItem(TOKEN_KEY)) as string;
   } catch (error) {
-    console.log('retrieveUserToken:', error);
+    console.log('retrieveUserToken - error:', error);
     return;
   }
 };
 
 const storeUserEmail = async (email: string) => {
-  console.log('storing user email - ', email);
   try {
     await EncryptedStorage.setItem(EMAIL_KEY, email);
   } catch (error) {
@@ -35,25 +29,19 @@ const storeUserEmail = async (email: string) => {
 };
 
 const retrieveUserEmail = async () => {
-  console.log('retrieving user email');
-
   try {
-    const email = await EncryptedStorage.getItem(EMAIL_KEY);
-    console.log(email);
-    return email as string;
+    return (await EncryptedStorage.getItem(EMAIL_KEY)) as string;
   } catch (error) {
-    console.log('retrieveUserEmail:', error);
+    console.log('retrieveUserEmail - error:', error);
     return;
   }
 };
 
 const clearTokenStorage = async () => {
-  console.log('clearing user token');
-
   try {
     await EncryptedStorage.removeItem(TOKEN_KEY);
   } catch (error) {
-    console.log('clearStorage:', error);
+    console.log('clearStorage - error:', error);
   }
 };
 

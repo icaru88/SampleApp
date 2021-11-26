@@ -1,17 +1,22 @@
 import React, {useState} from 'react';
 import {Alert, Keyboard, Text, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import _ from 'lodash';
+import {RectangularButton} from 'src/Components/Button';
 import {EmailTextInput} from 'src/Components/EmailTextInput';
 import {PasswordTextInput} from 'src/Components/PasswordTextInput';
-import {LOGIN_ROUTE} from 'src/Navigation/routes';
-import {checkEmailValid} from 'src/Utils/Validators';
-import {RectangularButton} from '../../Components/Button';
-import styles from './styles';
-import {useRegisterMutation} from 'src/Services/AuthApi';
 import {Error} from 'src/Model/Error';
+import {LoginStackParamList} from 'src/Navigation/login_stack';
+import {LOGIN_ROUTE} from 'src/Navigation/routes';
+import {useRegisterMutation} from 'src/Services/AuthApi';
+import {checkEmailValid} from 'src/Utils/Validators';
+import styles from './styles';
 
-export const RegistrationScreen = ({navigation}) => {
+type Props = NativeStackScreenProps<LoginStackParamList, 'LOGIN_ROUTE'>;
+
+export const RegistrationScreen: React.FC<Props> = props => {
+  const {navigation} = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -46,7 +51,7 @@ export const RegistrationScreen = ({navigation}) => {
     }
   };
 
-  const onEmailTextChange = text => {
+  const onEmailTextChange = (text: string) => {
     checkEmailValid(text) ? setIsEmailValid(true) : setIsEmailValid(false);
     setEmail(text);
   };

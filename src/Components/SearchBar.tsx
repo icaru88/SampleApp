@@ -3,21 +3,21 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import {Theme} from 'src/Theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Theme} from 'src/Theme';
 
 type itemProps = {
   value: string;
-  onChangeText: (text) => void;
+  onChangeText: (text: string) => void;
   placeHolder?: string;
   onPressToSearch: () => void;
   onClearText: () => void;
 };
 
-export const SearchBar = (props: itemProps) => {
+export const SearchBar: React.FC<itemProps> = props => {
   const {value, onChangeText, placeHolder, onPressToSearch, onClearText} =
     props;
   return (

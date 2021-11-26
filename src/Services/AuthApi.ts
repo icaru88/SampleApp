@@ -1,9 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-export interface AuthDetails {
+export type AuthDetails = {
   email: string;
   password: string;
-}
+};
 type AuthResult = {
   id?: string;
   token: string;

@@ -1,14 +1,14 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import {ActivityIndicator, Alert} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {LoginNavigation} from './login_stack';
-import {HOME_NAVIGATOR_ROUTE, LOGIN_NAVIGATION_ROUTE} from './routes';
-import {HomeNavigation} from './home_stack';
-import {retrieveUserToken} from 'src/Utils/EncryptedStorage';
-import {ActivityIndicator, Alert} from 'react-native';
 import {useAppSelector} from 'src/hooks';
 import {AuthSlice, getCurrentAuthUserToken} from 'src/Store/AuthSlice';
-import {useDispatch} from 'react-redux';
+import {retrieveUserToken} from 'src/Utils/EncryptedStorage';
+import {HomeNavigation} from './home_stack';
+import {LoginNavigation} from './login_stack';
+import {HOME_NAVIGATOR_ROUTE, LOGIN_NAVIGATION_ROUTE} from './routes';
 
 const MainStack = createNativeStackNavigator();
 
@@ -18,14 +18,11 @@ export const MainNavigation = () => {
     getCurrentAuthUserToken(state),
   );
 
-  console.log('token in state', authTokenInState);
-
   const [loading, setLoading] = useState<boolean>(true);
 
   const retrieveTokenInStorage = async () => {
     try {
       const tokenInStorage = await retrieveUserToken();
-      console.log('token updated', tokenInStorage);
       tokenInStorage &&
         dispatch(
           AuthSlice.actions.setAuthDetails({
@@ -34,14 +31,13 @@ export const MainNavigation = () => {
         );
       loading && setLoading(false);
     } catch (error) {
-      console.log(error);
       Alert.alert('Error', 'Something went wrong. Please try again later.');
       loading && setLoading(false);
     }
   };
 
   useEffect(() => {
-    //check is user previously login
+    // check is user previously login
     retrieveTokenInStorage();
   }, []);
 

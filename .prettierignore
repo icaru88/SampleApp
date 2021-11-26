@@ -1,0 +1,9 @@
+node_modules
+ios
+android
+.vscode
+.husky
+package.json
+src/resources/fonts
+src/resources/images
+coverage

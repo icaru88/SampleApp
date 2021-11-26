@@ -1,14 +1,12 @@
 import React from 'react';
 import {Alert, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import {Theme} from 'src/Theme';
-import {spaceForDevice, deviceWidth} from 'src/Config/check_iphone_x';
-import {clearTokenStorage} from 'src/Utils/EncryptedStorage';
+import {deviceWidth, spaceForDevice} from 'src/Config/check_iphone_x';
 import {useAppDispatch} from 'src/hooks';
 import {AuthSlice} from 'src/Store/AuthSlice';
+import {Theme} from 'src/Theme';
+import {clearTokenStorage} from 'src/Utils/EncryptedStorage';
 type Props = {
-  navigation: any;
-  route: any;
   title?: string;
   style?: any;
 };
