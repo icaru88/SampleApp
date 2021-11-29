@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     es6: true,
+    jest: true,
   },
   extends: [
     'eslint:recommended',
@@ -9,6 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
+    'plugin:jest/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,6 +24,7 @@ module.exports = {
     '@typescript-eslint',
     'react-hooks',
     'simple-import-sort',
+    'jest',
   ],
   rules: {
     'react/react-in-jsx-scope': 'off',
@@ -172,4 +175,12 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['**/*.test.js', '**/*.test.jsx'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };
