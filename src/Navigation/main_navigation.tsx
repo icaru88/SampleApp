@@ -1,10 +1,10 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useAppSelector} from 'src/hooks';
-import {AuthSlice, getCurrentAuthUserToken} from 'src/Store/AuthSlice';
+import {authActions, getCurrentAuthUserToken} from 'src/Store/AuthSlice';
 import {retrieveUserToken} from 'src/Utils/EncryptedStorage';
 import {HomeNavigation} from './home_stack';
 import {LoginNavigation} from './login_stack';
@@ -25,7 +25,7 @@ export const MainNavigation = () => {
       const tokenInStorage = await retrieveUserToken();
       tokenInStorage &&
         dispatch(
-          AuthSlice.actions.setAuthDetails({
+          authActions.setAuthDetails({
             token: tokenInStorage,
           }),
         );

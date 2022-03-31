@@ -6,10 +6,13 @@ import _ from 'lodash';
 import {RectangularButton} from 'src/Components/Button';
 import {EmailTextInput} from 'src/Components/EmailTextInput';
 import {PasswordTextInput} from 'src/Components/PasswordTextInput';
+import {useAppDispatch} from 'src/hooks';
 import {Error} from 'src/Model/Error';
 import {LoginStackParamList} from 'src/Navigation/login_stack';
 import {REGISTER_ROUTE} from 'src/Navigation/routes';
+import {loginAction} from 'src/Saga/Auth/login';
 import {useLoginMutation} from 'src/Services/AuthApi';
+import {authActions} from 'src/Store/AuthSlice';
 import {
   retrieveUserEmail,
   storeUserEmail,
@@ -25,7 +28,8 @@ export const LoginScreen: React.FC<Props> = props => {
   const [password, setPassword] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [login, {isLoading}] = useLoginMutation();
+  // const [login, {isLoading}] = useLoginMutation();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     retrieveUserEmail().then(email => {
@@ -45,13 +49,21 @@ export const LoginScreen: React.FC<Props> = props => {
     Keyboard.dismiss();
 
     try {
-      const user = await login({email, password}).unwrap();
+      // const user = await login({email, password}).unwrap();
+      const loginResponse = dispatch(
+        loginAction({
+          // authActions.login({
+          email,
+          password,
+        }),
+      );
+      console.log('123', loginResponse);
       Alert.alert('Success', 'Login Success', [
         {
           text: 'OK',
           onPress: () => {
-            storeUserToken(user.token);
-            storeUserEmail(email);
+            // storeUserToken(user.token);
+            // storeUserEmail(email);
           },
         },
       ]);
@@ -90,7 +102,7 @@ export const LoginScreen: React.FC<Props> = props => {
           <RectangularButton
             onPress={_.debounce(() => onLoginPress(), 500)}
             title={'LOGIN'}
-            isLoading={isLoading}
+            // isLoading={isLoading}
           />
         </View>
 

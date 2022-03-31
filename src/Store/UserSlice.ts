@@ -19,7 +19,7 @@ const initialState: UserState = {
   data: [],
 };
 
-export const UsersSlice = createSlice({
+const UsersSlice = createSlice({
   name: 'Users',
   initialState,
   reducers: {
@@ -27,12 +27,21 @@ export const UsersSlice = createSlice({
       state = action.payload;
     },
     reset: state => (state = initialState),
+    // fetchUserList: (state, action: PayloadAction<UserState>) => {
+    //   const payload = action.payload;
+    //   state.page = payload.page;
+    //   state.per_page = payload.per_page;
+    //   state.total = payload.total;
+    //   state.total_pages = payload.total_pages;
+    //   state.data = state.data.concat(payload.data);
+    // },
   },
   extraReducers: builder => {
     builder
       .addCase('Auth/clearAuthDetails', () => {
         return initialState;
       })
+      // TODO - to remove
       .addMatcher(
         UsersApi.endpoints.listUsers.matchFulfilled,
         (state, {payload}) => {
@@ -45,9 +54,16 @@ export const UsersSlice = createSlice({
       );
   },
 });
+// Actions
+export const userActions = UsersSlice.actions;
 
+// Selectors
 export const getCurrentUsersListingPage = (state: RootState) =>
   state.users.page;
 export const getTotalUsersListingPage = (state: RootState) =>
   state.users.total_pages;
 export const getUsersListing = (state: RootState) => state.users.data;
+
+// Reducer
+const userReducer = UsersSlice.reducer;
+export default userReducer;

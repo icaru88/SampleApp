@@ -6,9 +6,11 @@ import _ from 'lodash';
 import {RectangularButton} from 'src/Components/Button';
 import {EmailTextInput} from 'src/Components/EmailTextInput';
 import {PasswordTextInput} from 'src/Components/PasswordTextInput';
+import {useAppDispatch} from 'src/hooks';
 import {Error} from 'src/Model/Error';
 import {LoginStackParamList} from 'src/Navigation/login_stack';
 import {LOGIN_ROUTE} from 'src/Navigation/routes';
+import {registerAction} from 'src/Saga/Auth/register';
 import {useRegisterMutation} from 'src/Services/AuthApi';
 import {checkEmailValid} from 'src/Utils/Validators';
 import styles from './styles';
@@ -21,7 +23,8 @@ export const RegistrationScreen: React.FC<Props> = props => {
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [register, {isLoading}] = useRegisterMutation();
+  // const [register, {isLoading}] = useRegisterMutation();
+  const dispatch = useAppDispatch();
 
   const onSignInPress = async () => {
     navigation.navigate(LOGIN_ROUTE);
@@ -34,21 +37,27 @@ export const RegistrationScreen: React.FC<Props> = props => {
       return;
     }
 
-    try {
-      await register({
+    dispatch(
+      registerAction({
         email,
         password,
-      }).unwrap();
-      Alert.alert('Success', 'Register Success', [
-        {
-          text: 'OK',
-          onPress: () => navigation.navigate(LOGIN_ROUTE),
-        },
-      ]);
-    } catch (error) {
-      const errorData = error as Error;
-      Alert.alert('Error', errorData.data.error);
-    }
+      }),
+    );
+    // try {
+    //   await register({
+    //     email,
+    //     password,
+    //   }).unwrap();
+    //   Alert.alert('Success', 'Register Success', [
+    //     {
+    //       text: 'OK',
+    //       onPress: () => navigation.navigate(LOGIN_ROUTE),
+    //     },
+    //   ]);
+    // } catch (error) {
+    //   const errorData = error as Error;
+    //   Alert.alert('Error', errorData.data.error);
+    // }
   };
 
   const onEmailTextChange = (text: string) => {
@@ -81,7 +90,7 @@ export const RegistrationScreen: React.FC<Props> = props => {
           <RectangularButton
             onPress={_.debounce(() => onRegisterPress(), 500)}
             title={'REGISTER'}
-            isLoading={isLoading}
+            // isLoading={isLoading}
           />
         </View>
         <View style={styles.footerContainer}>

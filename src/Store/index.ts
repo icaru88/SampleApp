@@ -1,21 +1,44 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {AuthApi} from 'src/Services/AuthApi';
+import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit';
+import {createInjectorsEnhancer} from 'redux-injectors';
+import createSagaMiddleware from 'redux-saga';
 import {UsersApi} from 'src/Services/UsersApi';
-import {AuthSlice} from 'src/Store/AuthSlice';
-import {UsersSlice} from 'src/Store/UserSlice';
+import rootSaga from '../Saga';
+import createReducer from './reducers';
 
+const reduxSagaMonitorOptions = {};
+const sagaMiddleware = createSagaMiddleware(reduxSagaMonitorOptions);
+const {run: runSaga} = sagaMiddleware;
+
+const middlewares = [sagaMiddleware, UsersApi.middleware];
+
+const enhancers = [
+  createInjectorsEnhancer({
+    createReducer,
+    runSaga,
+  }),
+];
 export const store = configureStore({
-  reducer: {
-    auth: AuthSlice.reducer,
-    [AuthApi.reducerPath]: AuthApi.reducer,
-    users: UsersSlice.reducer,
-    [UsersApi.reducerPath]: UsersApi.reducer,
-  },
+  reducer: createReducer(),
+  // middlewares,
   middleware: getDefaultMiddleware => {
-    const customMiddleware = [AuthApi.middleware, UsersApi.middleware];
-    return getDefaultMiddleware().concat(customMiddleware);
+    // const customMiddleware = [AuthApi.middleware, UsersApi.middleware];
+    return getDefaultMiddleware({
+      // thunk: false,
+      // serializableCheck: false,
+    }).concat(middlewares);
   },
+  enhancers,
 });
+
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+// TODO - might needed - for yield put action error
+// export type AppThunk<ReturnType = void> = ThunkAction<
+//   ReturnType,
+//   RootState,
+//   unknown,
+//   Action<string>
+// >;

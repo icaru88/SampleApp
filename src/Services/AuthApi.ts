@@ -4,7 +4,7 @@ export type AuthDetails = {
   email: string;
   password: string;
 };
-type AuthResult = {
+export type AuthResult = {
   id?: string;
   token: string;
 };

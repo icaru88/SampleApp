@@ -3,7 +3,7 @@ import {Alert, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {deviceWidth, spaceForDevice} from 'src/Config/check_iphone_x';
 import {useAppDispatch} from 'src/hooks';
-import {AuthSlice} from 'src/Store/AuthSlice';
+import {authActions} from 'src/Store/AuthSlice';
 import {Theme} from 'src/Theme';
 import {clearTokenStorage} from 'src/Utils/EncryptedStorage';
 type Props = {
@@ -19,7 +19,7 @@ export const HeaderNavBar = (props: Props) => {
         text: 'OK',
         onPress: () => {
           clearTokenStorage();
-          dispatch(AuthSlice.actions.clearAuthDetails());
+          dispatch(authActions.clearAuthDetails());
         },
       },
       {

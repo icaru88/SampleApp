@@ -4,6 +4,7 @@ const TOKEN_KEY = 'TOKEN';
 const EMAIL_KEY = 'EMAIL';
 
 const storeUserToken = async (token: string) => {
+  console.log('storeUserToken', token);
   try {
     await EncryptedStorage.setItem(TOKEN_KEY, token);
   } catch (error) {
