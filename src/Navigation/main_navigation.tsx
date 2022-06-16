@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
@@ -18,9 +18,9 @@ export const MainNavigation = () => {
     getCurrentAuthUserToken(state),
   );
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const retrieveTokenInStorage = async () => {
+  const retrieveTokenInStorage = useCallback(async () => {
     try {
       const tokenInStorage = await retrieveUserToken();
       tokenInStorage &&
@@ -29,19 +29,19 @@ export const MainNavigation = () => {
             token: tokenInStorage,
           }),
         );
-      loading && setLoading(false);
     } catch (error) {
       Alert.alert('Error', 'Something went wrong. Please try again later.');
-      loading && setLoading(false);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     // check is user previously login
     retrieveTokenInStorage();
-  }, []);
+  }, [retrieveTokenInStorage]);
 
-  if (loading) {
+  if (isLoading) {
     return <ActivityIndicator />;
   }
 
@@ -50,7 +50,6 @@ export const MainNavigation = () => {
       <MainStack.Navigator
         initialRouteName={LOGIN_NAVIGATION_ROUTE}
         screenOptions={{headerShown: false}}>
-        {/* {!!token && token.length > 0 ? ( */}
         {!!authTokenInState && authTokenInState.length > 0 ? (
           <MainStack.Screen
             name={HOME_NAVIGATOR_ROUTE}

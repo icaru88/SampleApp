@@ -1,4 +1,4 @@
-import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AuthApi} from 'src/Services/AuthApi';
 import {RootState} from 'src/Store';
 

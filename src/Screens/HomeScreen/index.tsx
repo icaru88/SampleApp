@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -82,13 +82,13 @@ export const HomeScreen: React.FC = () => {
     return <UserItem onPress={() => null} name={name} {...item} />;
   };
 
-  const onLoadMore = () => {
+  const onLoadMore = useCallback(() => {
     if (searchText.trim().length > 0) return;
 
     if (currentLoadedPage < totalListingPage) {
       setPage(currentLoadedPage + 1);
     }
-  };
+  }, [currentLoadedPage, searchText, totalListingPage]);
 
   const renderFooter = () => {
     return isFetching ? (
